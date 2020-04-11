@@ -11,7 +11,7 @@ createMovie = (req, res) => {
     });
   }
 
-  const movie = new Movie();
+  const movie = new Movie(body);
 
   movie
     .save()
