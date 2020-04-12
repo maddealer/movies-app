@@ -7,7 +7,7 @@ createMovie = (req, res) => {
   if (!body) {
     return res.status(400).json({
       success: false,
-      error: "You must provide a movie"
+      error: "You must provide a movie",
     });
   }
 
@@ -19,13 +19,13 @@ createMovie = (req, res) => {
       return res.status(201).json({
         success: true,
         id: movie._id,
-        message: "Movie created"
+        message: "Movie created",
       });
     })
-    .catch(error => {
+    .catch((error) => {
       return res.status(400).json({
         error,
-        message: "Movie not created"
+        message: "Movie not created",
       });
     });
 };
@@ -36,35 +36,35 @@ updateMovie = async (req, res) => {
   if (!body) {
     return res.status(400).json({
       success: false,
-      message: "You must provide a body to update"
+      message: "You must provide a body to update",
     });
   }
 
-  Movie.findOneAndUpdate({ _id: req.body.id }, (err, movie) => {
+  Movie.findOne({ _id: req.params.id }, (err, movie) => {
+    console.log(req.body.id);
     if (err) {
       return res.status(404).json({
         err,
-        message: "Movie not found"
+        message: "Movie not found",
       });
     }
 
     movie.name = body.name;
     movie.time = body.time;
     movie.rating = body.rating;
-
     movie
       .save()
       .then(() => {
         return res.status(200).json({
           success: true,
           id: movie._id,
-          message: "Movie updated!"
+          message: "Movie updated!",
         });
       })
-      .catch(error => {
+      .catch((error) => {
         return res.status(404).json({
           error,
-          message: "Movie not updated!"
+          message: "Movie not updated!",
         });
       });
   });
@@ -82,7 +82,7 @@ deleteMovie = async (req, res) => {
     }
 
     return res.status(200).json({ success: true, data: movie });
-  }).catch(err => console.log(err));
+  }).catch((err) => console.log(err));
 };
 
 //GET MOVIE BY ID
@@ -96,7 +96,7 @@ getMovieById = async (req, res) => {
       return res.status(404).json({ success: false, error: `Movie not found` });
     }
     return res.status(200).json({ success: true, data: movie });
-  }).catch(err => console.log(err));
+  }).catch((err) => console.log(err));
 };
 
 //GET ALL MOVIES
@@ -109,7 +109,7 @@ getMovies = async (req, res) => {
       return res.status(404).json({ success: false, error: `Movie not found` });
     }
     return res.status(200).json({ success: true, data: movies });
-  }).catch(err => console.log(err));
+  }).catch((err) => console.log(err));
 };
 
 module.exports = {
@@ -117,5 +117,5 @@ module.exports = {
   updateMovie,
   deleteMovie,
   getMovies,
-  getMovieById
+  getMovieById,
 };
